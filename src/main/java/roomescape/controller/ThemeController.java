@@ -20,13 +20,13 @@ public class ThemeController {
     }
 
     @PostMapping("/theme")
-    public ResponseEntity createTheme(@RequestBody ThemeCreateRequest themeCreateRequest) {
+    public ResponseEntity<Void> createTheme(@RequestBody ThemeCreateRequest themeCreateRequest) {
         Theme theme = themeService.createTheme(themeCreateRequest);
         return ResponseEntity.created(URI.create("/theme/" + theme.getId())).build();
     }
 
     @GetMapping("/theme/{id}")
-    public ResponseEntity showTheme(@PathVariable Long id) {
+    public ResponseEntity<ThemeShowResponse> showTheme(@PathVariable Long id) {
         ThemeShowResponse themeShowResponse = themeService.showTheme(id);
         return ResponseEntity.ok(themeShowResponse);
     }

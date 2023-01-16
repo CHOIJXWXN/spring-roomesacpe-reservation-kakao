@@ -2,10 +2,7 @@ package nextstep;
 
 import roomescape.domain.Reservation;
 import roomescape.domain.Theme;
-import roomescape.dto.ReservationCreateRequest;
-import roomescape.dto.ThemeCreateRequest;
-import roomescape.dto.ThemeShowResponse;
-import roomescape.dto.ThemeUpdateRequest;
+import roomescape.dto.*;
 import roomescape.repository.ReservationConsoleRepository;
 import roomescape.repository.ThemeConsoleRepository;
 import roomescape.service.ReservationService;
@@ -65,7 +62,7 @@ public class RoomEscapeApplication {
                 String params = input.split(" ")[2];
                 Long id = Long.parseLong(params.split(",")[0]);
 
-                Reservation reservation = null;
+                ReservationShowResponse reservation = null;
                 try {
                     reservation = reservationService.showReservation(id);
                 } catch (NoSuchElementException e) {
@@ -78,9 +75,9 @@ public class RoomEscapeApplication {
                 System.out.println("예약 날짜: " + reservation.getDate());
                 System.out.println("예약 시간: " + reservation.getTime());
                 System.out.println("예약자 이름: " + reservation.getName());
-                System.out.println("예약 테마 이름: " + reservation.getTheme().getName());
-                System.out.println("예약 테마 설명: " + reservation.getTheme().getDesc());
-                System.out.println("예약 테마 가격: " + reservation.getTheme().getPrice());
+                System.out.println("예약 테마 이름: " + reservation.getThemeName());
+                System.out.println("예약 테마 설명: " + reservation.getThemeDesc());
+                System.out.println("예약 테마 가격: " + reservation.getThemePrice());
             }
 
             if (input.startsWith(DELETE_RESERVATION)) {

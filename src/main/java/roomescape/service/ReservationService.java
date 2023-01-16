@@ -1,5 +1,6 @@
 package roomescape.service;
 
+import roomescape.dto.ReservationShowResponse;
 import roomescape.exception.DuplicateReservationScheduleException;
 import roomescape.exception.ReservationNotFoundException;
 import roomescape.exception.ThemeNotFoundException;
@@ -23,18 +24,22 @@ public class ReservationService {
         this.themeRepository = themeRepository;
     }
 
-    public Reservation createReservation(ReservationCreateRequest reservationCreateRequest) {
+    private void checkSchedule(ReservationCreateRequest reservationCreateRequest) {
         if (reservationRepository.checkSchedule(reservationCreateRequest.getDate(), reservationCreateRequest.getTime()) != 0) {
             throw new DuplicateReservationScheduleException("중복된 예약 발생");
         }
+    }
+
+    public Reservation createReservation(ReservationCreateRequest reservationCreateRequest) {
+        checkSchedule(reservationCreateRequest);
         Theme theme = themeRepository.findThemeById(reservationCreateRequest.getThemeId()).orElseThrow(ThemeNotFoundException::new);
         Long id = reservationRepository.addReservation(reservationCreateRequest.toReservation(theme));
         return reservationRepository.findReservation(id).orElseThrow(ReservationNotFoundException::new);
     }
 
-    public Reservation showReservation(Long id) {
+    public ReservationShowResponse showReservation(Long id) {
         Reservation reservation = reservationRepository.findReservation(id).orElseThrow(ReservationNotFoundException::new);
-        return reservation;
+        return ReservationShowResponse.of(reservation);
     }
 
     public int deleteReservation(Long id) {
