@@ -46,9 +46,9 @@ public class ThemeAppRepository implements ThemeRepository {
         return jdbcTemplate.query(sql, actorRowMapper, id).stream().findFirst();
     }
 
-    public int updateTheme(ThemeUpdateRequest themeUpdateRequest, Long id) {
+    public int updateTheme(Theme theme, Long id) {
         String sql = "UPDATE theme SET name = ?, desc = ?, price = ? WHERE id = ?;";
-        return jdbcTemplate.update(sql, themeUpdateRequest.getName(), themeUpdateRequest.getDesc(), themeUpdateRequest.getPrice(), id);
+        return jdbcTemplate.update(sql, theme.getName(), theme.getDesc(), theme.getPrice(), id);
     }
 
     public int deleteTheme(Long id) {

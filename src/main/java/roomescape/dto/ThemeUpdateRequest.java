@@ -37,4 +37,13 @@ public class ThemeUpdateRequest {
         }
     }
 
+    public Theme toTheme(Long id) {
+         return new Theme(
+                 id,
+                 this.name,
+                 this.desc,
+                 this.price
+         );
+    }
+
 }

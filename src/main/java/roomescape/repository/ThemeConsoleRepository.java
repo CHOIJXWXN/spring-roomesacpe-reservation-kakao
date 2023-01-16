@@ -31,9 +31,9 @@ public class ThemeConsoleRepository extends BaseConsoleRepository implements The
     }
 
     @Override
-    public int updateTheme(ThemeUpdateRequest themeUpdateRequest, Long id) {
+    public int updateTheme(Theme theme, Long id) {
         final String SQL = "UPDATE theme SET name = ?, desc = ?, price = ? WHERE id = ?;";
-        return update(SQL, themeUpdateRequest.getName(), themeUpdateRequest.getDesc(), themeUpdateRequest.getPrice(), id);
+        return update(SQL, theme.getName(), theme.getDesc(), theme.getPrice(), id);
     }
 
     @Override
