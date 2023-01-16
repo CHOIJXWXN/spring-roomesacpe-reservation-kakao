@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import roomescape.domain.Theme;
 import roomescape.dto.ReservationCreateRequest;
 
-import java.util.NoSuchElementException;
-
 @Service
 public class ReservationService {
 
@@ -34,13 +32,16 @@ public class ReservationService {
     @Transactional
     public Reservation createReservation(ReservationCreateRequest reservationCreateRequest) {
         checkSchedule(reservationCreateRequest);
-        Theme theme = themeRepository.findThemeById(reservationCreateRequest.getThemeId()).orElseThrow(ThemeNotFoundException::new);
+        Theme theme = themeRepository.findThemeById(reservationCreateRequest.getThemeId())
+                .orElseThrow(ThemeNotFoundException::new);
         Long id = reservationRepository.addReservation(reservationCreateRequest.toReservation(theme));
-        return reservationRepository.findReservation(id).orElseThrow(ReservationNotFoundException::new);
+        return reservationRepository.findReservation(id)
+                .orElseThrow(ReservationNotFoundException::new);
     }
 
     public ReservationShowResponse showReservation(Long id) {
-        Reservation reservation = reservationRepository.findReservation(id).orElseThrow(ReservationNotFoundException::new);
+        Reservation reservation = reservationRepository.findReservation(id)
+                .orElseThrow(ReservationNotFoundException::new);
         return ReservationShowResponse.of(reservation);
     }
 

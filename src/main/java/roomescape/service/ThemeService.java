@@ -29,23 +29,27 @@ public class ThemeService {
                 themeCreateRequest.getPrice()
                 )
         );
-        return themeRepository.findThemeById(id).orElseThrow(ThemeNotFoundException::new);
+        return themeRepository.findThemeById(id)
+                .orElseThrow(ThemeNotFoundException::new);
     }
 
     public ThemeShowResponse showTheme(Long id) {
-        Theme theme = themeRepository.findThemeById(id).orElseThrow(ThemeNotFoundException::new);
+        Theme theme = themeRepository.findThemeById(id)
+                .orElseThrow(ThemeNotFoundException::new);
         return ThemeShowResponse.of(theme);
     }
 
     @Transactional
     public ThemeShowResponse updateTheme(ThemeUpdateRequest themeUpdateRequest, Long id) {
-        Theme theme = themeRepository.findThemeById(id).orElseThrow(ThemeNotFoundException::new);
+        Theme theme = themeRepository.findThemeById(id)
+                .orElseThrow(ThemeNotFoundException::new);
         themeUpdateRequest.fill(theme);
         int count = themeRepository.updateTheme(themeUpdateRequest.toTheme(id), id);
         if (count == 0) {
             throw new ThemeNotFoundException("없는 테마 수정 요청");
         }
-        return ThemeShowResponse.of(themeRepository.findThemeById(id).orElseThrow(ThemeNotFoundException::new));
+        return ThemeShowResponse.of(themeRepository.findThemeById(id)
+                .orElseThrow(ThemeNotFoundException::new));
     }
 
     @Transactional

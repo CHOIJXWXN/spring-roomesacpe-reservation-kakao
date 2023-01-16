@@ -2,7 +2,6 @@ package roomescape.repository;
 
 import org.springframework.jdbc.core.RowMapper;
 import roomescape.domain.Theme;
-import roomescape.dto.ThemeUpdateRequest;
 
 import java.util.Optional;
 
