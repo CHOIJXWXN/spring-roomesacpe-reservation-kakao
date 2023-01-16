@@ -1,5 +1,6 @@
 package roomescape.service;
 
+import org.springframework.transaction.annotation.Transactional;
 import roomescape.dto.ReservationShowResponse;
 import roomescape.exception.DuplicateReservationScheduleException;
 import roomescape.exception.ReservationNotFoundException;
@@ -30,6 +31,7 @@ public class ReservationService {
         }
     }
 
+    @Transactional
     public Reservation createReservation(ReservationCreateRequest reservationCreateRequest) {
         checkSchedule(reservationCreateRequest);
         Theme theme = themeRepository.findThemeById(reservationCreateRequest.getThemeId()).orElseThrow(ThemeNotFoundException::new);
@@ -42,6 +44,7 @@ public class ReservationService {
         return ReservationShowResponse.of(reservation);
     }
 
+    @Transactional
     public int deleteReservation(Long id) {
         return reservationRepository.removeReservation(id);
     }

@@ -20,6 +20,7 @@ public class ThemeService {
         this.themeRepository = themeRepository;
     }
 
+    @Transactional
     public Theme createTheme(ThemeCreateRequest themeCreateRequest) {
         Long id =  themeRepository.createTheme(new Theme(
                 null,
@@ -47,6 +48,7 @@ public class ThemeService {
         return ThemeShowResponse.of(themeRepository.findThemeById(id).orElseThrow(ThemeNotFoundException::new));
     }
 
+    @Transactional
     public int deleteTheme(Long id) {
         return themeRepository.deleteTheme(id);
     }
